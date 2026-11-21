@@ -956,9 +956,14 @@ body:has(.site-menu[open]) {
   color: var(--accent);
 }
 
-.blog-card img {
-  width: 100%;
+.blog-cover {
   aspect-ratio: 16 / 9;
+  background: #19121f;
+}
+
+.blog-cover img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 

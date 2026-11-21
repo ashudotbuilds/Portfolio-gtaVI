@@ -1,6 +1,7 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { CardTrack, FeatureCard } from './sections'
 import { brandMark, LINKS, miami, highlights, experience, blog, footer } from './content'
+import { fetchBlogPosts } from './hashnode'
 import work from './assets/site/highlights/remote-work.avif'
 import afterHours from './assets/site/highlights/dev-community.avif'
 import techTambola from './assets/site/highlights/tech-tambola.avif'
@@ -10,6 +11,14 @@ import cstep from './assets/site/experience/cstep.avif'
 import postOne from './assets/site/blog/post-1.avif'
 import postTwo from './assets/site/blog/post-2.avif'
 import postThree from './assets/site/blog/post-3.avif'
+
+const blogCovers = {
+  [LINKS.machinePost]: postOne,
+  [LINKS.certificatesPost]: postTwo,
+  [LINKS.llmsPost]: postThree,
+}
+
+const fallbackPosts = blog.posts.map((post) => ({ ...post, url: LINKS[post.link] }))
 
 export function Miami() {
   return (
@@ -94,14 +103,37 @@ export function WorkExperience() {
 }
 
 export function Blog() {
-  const images = [postOne, postTwo, postThree]
+  const [posts, setPosts] = useState(fallbackPosts)
+
+  useEffect(() => {
+    const controller = new AbortController()
+
+    fetchBlogPosts(controller.signal).then((latestPosts) => {
+      if (!controller.signal.aborted && latestPosts.length) setPosts(latestPosts)
+    }).catch(() => {
+      // Keep the bundled cards when Hashnode is unavailable.
+    })
+
+    return () => controller.abort()
+  }, [])
 
   return (
     <CardCarousel id="blog" title={blog.title} viewAll={blog.viewAll}>
-      {blog.posts.map(({ title, dateTime, metadata, readTime, link }, index) => (
-        <article className="blog-card" key={link}>
-          <a href={LINKS[link]}>
-            <img src={images[index]} alt="" loading="lazy" />
+      {posts.map(({ title, dateTime, metadata, readTime, url, image }) => (
+        <article className="blog-card" key={url}>
+          <a href={url}>
+            <div className="blog-cover" aria-hidden="true">
+              {(image || blogCovers[url]) && (
+                <img src={image || blogCovers[url]} alt="" loading="lazy" onError={(event) => {
+                  const img = event.currentTarget
+                  if (blogCovers[url] && img.getAttribute('src') !== blogCovers[url]) {
+                    img.src = blogCovers[url]
+                  } else {
+                    img.hidden = true
+                  }
+                }} />
+              )}
+            </div>
             <div className="card-copy">
               <p className="blog-meta">
                 <time dateTime={dateTime}>{metadata}</time>

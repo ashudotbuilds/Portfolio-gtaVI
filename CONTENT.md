@@ -39,6 +39,9 @@ Every word on the AshuLabs portfolio, section by section, in page order. Where a
 - **CSTEP** (Center for Study of Science, Technology and Policy) · Intern · Jul 2026 – Oct 2026 · Remote. I wrote scripts to automate recurring tasks and reduce manual steps in day-to-day workflows.
 
 **Blog** (header "Blog", button "View all")
+
+The carousel loads the latest three posts from Ashutosh’s public Hashnode profile (`ashudotdev`) on page load, filtered to `blog.ashu.fun`. The cards below are bundled for when the feed is unavailable.
+
 - [In Love With the Machine, Not the Race](https://blog.ashu.fun/in-love-with-the-machine-not-the-race) (November 13, 2026)
 - [Are Certificates Dead? 💀](https://blog.ashu.fun/are-certificates-dead) (October 11, 2026)
 - [Understanding Large Language Models (LLMs):](https://blog.ashu.fun/understanding-large-language-models-llms) (July 1, 2026 · 10 min read)
