@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import Cal from '@calcom/embed-react'
 import { CardTrack, FeatureCard } from './sections'
 import { brandMark, LINKS, miami, highlights, experience, blog, footer } from './content'
 import { fetchBlogPosts } from './hashnode'
@@ -148,39 +149,91 @@ export function Blog() {
   )
 }
 
-export function Footer() {
-  const form = footer.contactForm
+const bookingLink = new URL(LINKS.booking).pathname.slice(1)
+const bookingConfig = { theme: 'dark' }
 
+function FooterContact() {
+  const copy = footer.contactForm
+  const [status, setStatus] = useState('idle')
+  const [bookingOpen, setBookingOpen] = useState(false)
+  const sending = status === 'sending'
+
+  async function sendInquiry(event) {
+    event.preventDefault()
+    if (sending) return
+
+    const form = event.currentTarget
+    const fields = Object.fromEntries(new FormData(form))
+    setStatus('sending')
+
+    try {
+      const response = await fetch(LINKS.inquiry, {
+        method: 'POST',
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify(fields),
+      })
+      const result = await response.json()
+      if (!response.ok || (result?.success !== true && result?.success !== 'true')) {
+        setStatus('error')
+        return
+      }
+
+      form.reset()
+      setStatus('sent')
+    } catch {
+      setStatus('error')
+    }
+  }
+
+  return (
+    <section id="contact" className="footer-contact" aria-labelledby="contact-title" tabIndex={-1}>
+      <h2 id="contact-title">{footer.contactTitle}</h2>
+      <p>{footer.contactDescription}</p>
+      <form className="contact-form" onSubmit={sendInquiry} aria-labelledby="contact-title">
+        <input type="hidden" name="_subject" value={copy.subject} />
+        <input type="hidden" name="_template" value="table" />
+        <input type="text" name="_honey" autoComplete="off" hidden />
+        <label>
+          {copy.name}
+          <input name="name" autoComplete="name" readOnly={sending} required />
+        </label>
+        <label>
+          {copy.email}
+          <input type="email" name="email" autoComplete="email" readOnly={sending} required />
+        </label>
+        <label className="contact-message">
+          {copy.message}
+          <textarea name="message" rows={4} readOnly={sending} required />
+        </label>
+        <div className="contact-actions">
+          <button type="submit" className="section-action" disabled={sending}>
+            {sending ? copy.sending : copy.submit}
+          </button>
+          <button type="button" className="section-action contact-booking"
+            aria-expanded={bookingOpen} aria-controls="contact-booking" onClick={() => setBookingOpen(!bookingOpen)}>
+            {footer.bookingAction}
+          </button>
+        </div>
+        <div className="contact-status" role="status">
+          {status === 'sent' && copy.sent}
+          {status === 'error' && copy.error}
+        </div>
+      </form>
+      <div id="contact-booking" className="contact-scheduler" hidden={!bookingOpen}>
+        {bookingOpen && <Cal calLink={bookingLink} config={bookingConfig} />}
+      </div>
+    </section>
+  )
+}
+
+export function Footer() {
   return (
     <footer className="portfolio-footer">
       <div className="site-shell footer-inner">
         <a href={LINKS.home} className="footer-logo">
           <img src={brandMark} width="115" height="84" alt={footer.logoAlt} loading="lazy" />
         </a>
-        <section id="contact" className="footer-contact" aria-labelledby="contact-title" tabIndex={-1}>
-          <h2 id="contact-title">{footer.contactTitle}</h2>
-          <p>{footer.contactDescription}</p>
-          <form className="contact-form" action={LINKS.inquiry} method="post" aria-labelledby="contact-title">
-            <input type="hidden" name="_subject" value={form.subject} />
-            <input type="hidden" name="_template" value="table" />
-            <label>
-              {form.name}
-              <input name="name" autoComplete="name" required />
-            </label>
-            <label>
-              {form.email}
-              <input type="email" name="email" autoComplete="email" required />
-            </label>
-            <label className="contact-message">
-              {form.message}
-              <textarea name="message" rows={4} required />
-            </label>
-            <div className="contact-actions">
-              <button type="submit" className="section-action">{form.submit}</button>
-              <a href={LINKS.booking} className="section-action contact-booking">{footer.bookingAction}</a>
-            </div>
-          </form>
-        </section>
+        <FooterContact />
         <div className="footer-meta">
           <nav className="footer-directories" aria-label="Footer links">
             {['socials', 'links'].map((group) => (

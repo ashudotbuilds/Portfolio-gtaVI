@@ -48,7 +48,7 @@ The carousel loads the latest three posts from Ashutosh’s public Hashnode prof
 
 **Footer**
 - AL monogram (link to the top)
-- Contact panel with the heading “Have a project in mind?” and the text “Tell me what you’re building and where you could use a hand.” The FormSubmit inquiry form asks for Name, Email and Project details, with a “Send Inquiry” button and a [“Book a Call” link](https://cal.com/ashudotbuilds).
+- Contact panel with the heading “Have a project in mind?” and the text “Tell me what you’re building and where you could use a hand.” The FormSubmit inquiry form asks for Name, Email and Project details. “Send Inquiry” shows the result in the panel, and “Book a Call” expands the Cal.com scheduler below the form.
 - Socials: [GitHub](https://github.com/ashudotbuilds), [LinkedIn](https://www.linkedin.com/in/ashudotbuilds/), [X](https://x.com/Ashudotbuilds)
 - Links: [Email](mailto:singhashutosh4123@gmail.com), [Résumé](public/ashutosh-singh-resume.pdf)
 - Badge (in the rating badge's place): "Rated D for Developer" / "Clean Code, Mild Refactoring, Frequent Coffee."

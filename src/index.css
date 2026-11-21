@@ -1050,8 +1050,18 @@ body:has(.site-menu[open]) {
 }
 
 .contact-message,
-.contact-actions {
+.contact-actions,
+.contact-status {
   grid-column: 1 / -1;
+}
+
+.contact-status:empty {
+  position: absolute;
+}
+
+.contact-actions button:disabled {
+  cursor: wait;
+  opacity: 0.7;
 }
 
 .contact-actions {
@@ -1068,6 +1078,11 @@ body:has(.site-menu[open]) {
   border: 1px solid var(--accent);
   background: transparent;
   color: var(--text);
+}
+
+.contact-scheduler {
+  margin-top: 1.5rem;
+  min-width: 0;
 }
 
 .footer-meta {

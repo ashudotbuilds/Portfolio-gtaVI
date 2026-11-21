@@ -1,16 +1,42 @@
-# React + Vite
+# AshuLabs | Grand Theft Developer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack developer portfolio set against sunset streets, neon signs, and the skyline of Indore. Inspired by the art direction of GTA VI, with custom illustrations and scroll-driven scenes.
 
-Currently, two official plugins are available:
+![Desktop homepage with Ashutosh Singh's monogram over a collage of Indore streets and portraits](docs/screenshots/hero-desktop.jpg)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Selected Work
 
-## React Compiler
+Three projects with their own illustrated covers. Monster App explores 3D motion with GSAP and Blender, Book My Ticket showcases backend work, and Portfolio Website focuses on the frontend.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+![The From Idea to Launch showcase and three illustrated project cards](docs/screenshots/selected-projects.jpg)
 
-## Expanding the ESLint configuration
+## Indore After Dark
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+The city scene pulls back from a motorcycle on wet streets to reveal Rajwada Palace as you scroll.
+
+![The Indore section with a motorcycle on a neon-lit street and the developer bio below](docs/screenshots/indore.jpg)
+
+## On Mobile
+
+Portrait artwork reframes the opening shot, and project cards can be swiped on smaller screens.
+
+<img src="docs/screenshots/hero-mobile.jpg" alt="Mobile homepage with portrait collage, availability, and Hire Me button" width="320">
+
+## Run Locally
+
+Built with React, Vite, Tailwind CSS, and GSAP ScrollTrigger.
+
+~~~bash
+bun install
+bun run dev
+~~~
+
+Use `bun run build` for a production build and `bun run lint` to check the source.
+
+## Content and Integrations
+
+- Edit [`src/content.js`](src/content.js) for copy, project links, and contact settings. [`CONTENT.md`](CONTENT.md) documents the page sections.
+- Hire Me submits inquiries through FormSubmit and shows the result in the footer. Book a Call opens the Cal.com scheduler in the same panel.
+- The blog pulls recent posts from Hashnode and uses bundled posts if the feed is unavailable.
+
+Independent portfolio project. No affiliation with Rockstar Games.
