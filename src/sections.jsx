@@ -1,75 +1,94 @@
-import { useRef, useState } from 'react'
+import { Children, useRef, useState } from 'react'
 import scene from './assets/site/meet-the-developer/scene.avif'
-import featured from './assets/site/meet-the-developer/featured-desktop.avif'
-import featuredMobile from './assets/site/meet-the-developer/featured-mobile.avif'
-import aiCard from './assets/site/meet-the-developer/card-1.avif'
-import basketballCard from './assets/site/meet-the-developer/card-2.avif'
-import mobileCard from './assets/site/meet-the-developer/card-3.avif'
+import portraitScene from './assets/site/meet-the-developer/scene-portrait.avif'
+import featured from './assets/site/meet-the-developer/project-showcase-desktop.avif'
+import featuredMobile from './assets/site/meet-the-developer/project-showcase-mobile.avif'
+import monsterCard from './assets/site/meet-the-developer/monster-app.avif'
+import ticketCard from './assets/site/meet-the-developer/book-my-ticket.avif'
+import portfolioCard from './assets/site/meet-the-developer/portfolio-website.avif'
 import rescueArt from './assets/site/services/card-tall-desktop.avif'
 import rescueMobile from './assets/site/services/card-tall-mobile.avif'
 import buildsArt from './assets/site/services/card-short.avif'
-import hostedMedia from './assets/hosted-media.json'
 import { LINKS, meet, services } from './content'
 
-const projectImages = [aiCard, basketballCard, mobileCard]
+const projectImages = { monster: monsterCard, ticket: ticketCard, portfolio: portfolioCard }
 
-export function FeatureCard({ image, className, children }) {
+export function FeatureCard({ image, className, href, children }) {
+  const Card = href ? 'a' : 'article'
+
   return (
-    <article className={`feature-card ${className}`}>
+    <Card className={`feature-card ${className}`} href={href}>
       <img src={image} alt="" loading="lazy" />
       <div className="card-copy">{children}</div>
-    </article>
+    </Card>
+  )
+}
+
+export function CardTrack({ id, className, label, track, expanded = false, children }) {
+  const [current, setCurrent] = useState(0)
+  const count = Children.count(children)
+
+  function updateCurrent({ currentTarget: row }) {
+    if (count < 2) return
+    const distance = row.children[1].offsetLeft - row.children[0].offsetLeft
+    if (distance > 0) setCurrent(Math.round(row.scrollLeft / distance))
+  }
+
+  function selectCard(index) {
+    const row = track.current
+    row.scrollTo({ left: row.children[index].offsetLeft - row.children[0].offsetLeft })
+  }
+
+  return (
+    <>
+      <div id={id} ref={track} className={className} data-expanded={expanded} onScroll={updateCurrent}>
+        {children}
+      </div>
+      {count > 1 && <div className="carousel-pagination" role="group" aria-label={label}>
+        {Array.from({ length: count }, (_, index) => (
+          <button key={index} type="button" onClick={() => selectCard(index)}
+            aria-label={`${index + 1} / ${count}`} aria-current={current === index ? 'true' : undefined}
+            aria-controls={id} />
+        ))}
+      </div>}
+    </>
   )
 }
 
 export function MeetDeveloper() {
-  const player = useRef(null)
-  const [playing, setPlaying] = useState(false)
-
-  function openRide() {
-    player.current.showModal()
-    setPlaying(true)
-  }
+  const projects = useRef(null)
 
   return (
     <section className="meet scroll-section" aria-labelledby="meet-title">
       <div className="meet-scene scene-backdrop">
-        <img src={scene} alt="" />
+        <picture>
+          <source media="(max-aspect-ratio: 4/5)" srcSet={portraitScene} />
+          <img src={scene} alt="" />
+        </picture>
         <div className="meet-heading">
-          <p className="section-eyebrow">{meet.watch}</p>
           <h2 id="meet-title">{meet.title}</h2>
-          <button className="scene-play" type="button" onClick={openRide} aria-label={`${meet.play} ${meet.featured}`}>
-            <span aria-hidden="true">▶</span>
-          </button>
         </div>
       </div>
-      <div className="section-cards meet-cards">
-        <article className="feature-card ride-card">
+      <div id="projects" className="section-cards meet-cards">
+        <article className="feature-card project-showcase">
           <picture>
             <source media="(max-width: 600px)" srcSet={featuredMobile} />
             <img src={featured} alt="" loading="lazy" />
           </picture>
           <div className="card-copy">
-            <p className="section-eyebrow">{meet.watch}</p>
             <h3>{meet.featured}</h3>
-            <button className="section-action" type="button" onClick={openRide}>{meet.play}</button>
+            <a href={LINKS.projectCards} className="section-action">{meet.explore}</a>
           </div>
         </article>
-        <div className="project-grid">
-          {meet.projects.map(({ category, title }, index) => (
-            <FeatureCard image={projectImages[index]} className="project-card" key={title}>
+        <CardTrack id="project-cards" className="project-grid" label={meet.title} track={projects}>
+          {meet.projects.map(({ id, category, title }) => (
+            <FeatureCard image={projectImages[id]} className="project-card" href={LINKS[id]} key={id}>
               <p className="section-eyebrow">{category}</p>
               <h3>{title}</h3>
             </FeatureCard>
           ))}
-        </div>
+        </CardTrack>
       </div>
-      <dialog className="ride-player" ref={player} aria-label={meet.featured} onClose={() => setPlaying(false)}>
-        <form method="dialog">
-          <button type="submit" className="section-action">{meet.close}</button>
-        </form>
-        {playing && <video src={hostedMedia.city.video} autoPlay muted playsInline controls aria-label={meet.featured} />}
-      </dialog>
     </section>
   )
 }
@@ -80,7 +99,7 @@ export function Services() {
       <div className="services-backdrop scene-backdrop" aria-hidden="true">
         <video muted playsInline preload="none" />
       </div>
-      <div className="section-cards service-cards">
+      <div id="service-options" className="section-cards service-cards">
         <article className="feature-card rescue-card">
           <picture>
             <source media="(max-width: 600px)" srcSet={rescueMobile} />

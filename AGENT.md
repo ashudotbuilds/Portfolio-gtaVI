@@ -56,9 +56,9 @@ src/assets/
   fonts/              Outfit and Barlow Condensed (free, Google Fonts)
   site/               every image the page loads, already cut to size
     hero/             collage pieces + logo layers, desktop + mobile
-    meet-the-developer/  services/  highlights/  clients/  blog/  footer/
+    meet-the-developer/  services/  highlights/  experience/  blog/  footer/
   source/             the original artwork, grouped by shape, and the hero piece outlines
-  hosted-media.json   Cloudinary links to the two scroll-scrubbed videos
+  hosted-media.json   Archive of the original hosted backdrop sources
 ```
 
 - Use `site/` as delivered and never edit it by hand. If a slot needs a different crop, re-cut it from `source/` with a script in `tools/`.
@@ -75,8 +75,8 @@ Our own artwork only. Never download, hotlink or trace Rockstar's images, video,
 
 ## Scroll-scrubbed videos
 
-- Import their links from `src/assets/hosted-media.json`; never copy URLs into components.
-- Build renditions with Cloudinary URL transformations: keep every frame, add a keyframe every few frames, drop the audio, and give portrait phones a 9:16 crop that follows the subject. The poster is the first frame of the same crop, so nothing jumps when the video takes over.
+- Build the local renditions from the layered illustrations in `src/assets/source/backdrops/` with `tools/build_backdrop_videos.py`. The site imports the prepared files in `src/scroll-scenes.js`.
+- Keep every frame, use a keyframe for each frame, drop the audio, and give portrait phones a 9:16 crop that follows the subject. Use the first frame of the same crop for the poster.
 - Check each video's real length and frame count before mapping it to scroll, and how many pixels of scroll each frame gets. If a short clip would step, play it over part of the scroll range and hold the first and last frames either side.
 
 ## Page map
@@ -84,15 +84,15 @@ Our own artwork only. Never download, hotlink or trace Rockstar's images, video,
 | Live section | Our section |
 |---|---|
 | Loader | Loader, with our loader logo as the shape |
-| Navbar | GTD monogram, menu icon, and a "Hire Me" pill that appears as the hero scrolls away |
+| Navbar | AL monogram, menu icon, and a "Hire Me" pill that appears as the hero scrolls away |
 | Hero (layered intro) | Our collage and logo, tagline, "Hire Me" button, tech tags |
 | Launch Trailer | Meet the Developer: pinned scene, a wide featured card, and three project cards |
 | Ultimate Edition | Services: scroll-scrubbed video backdrop and two service cards |
-| Vice City, USA. | Miami, USA.: bio over the scroll-scrubbed city video |
+| Vice City, USA. | Indore, India: bio over the scroll-scrubbed city video |
 | Feature cards | Four wide cards: Open to Work, After Hours, Case Study, Off the Clock |
-| Shop | Clients: two cards |
+| Shop | Work Experience: Codeshor Technologies and CSTEP |
 | Featured News | Blog: three posts |
-| Footer | Logo, "Build Your Own" pill, socials, links, "Rated D for Developer" badge |
+| Footer | Shared AL monogram, project inquiry panel, socials, links, "Rated D for Developer" badge |
 
 Keep our own titles whatever the live site's headings say, and don't build promo strips or banners above the page. When the live page has something this page map doesn't, ask the user before building it.
 
@@ -118,19 +118,33 @@ This file is the only context that carries between prompts and sessions. Keep it
 
 ## Progress
 
-**Done:** Loader and collage intro, hero scroll and Hire Me handoff, Meet the Developer, Services and Miami with scroll-scrubbed video, three feature cards, Clients, Blog and footer. Initialized Git on `main` and excluded local recordings and measurement output.
+**Done:** Personalized both Services cards from Ashutosh portrait references and added generative AI and mobile app development to the build offering. Whole-page desktop and phone audit. Working section menu, swipeable mobile projects, cursor glow behind the pinned scenes, and locally served videos for Services and Miami. Personalized AshuLabs homepage art, including 20 intro shards, two matching posters and six brand exports. Added illustrated cards linking to Monster App, Book My Ticket and Portfolio Website in Meet the Developer. Updated the Indore about section with Ashutosh's current bio. Personalized the four highlights with portrait illustrations, January 2027 remote availability, Indore and Bhopal interests, and the Tech Tambola case study. Replaced the Ride Along feature with a portrait-led showcase linking to the three projects. Connected the footer socials, contact email, and public resume and added a project inquiry panel.
 
-**In progress:** none.
+**In progress:** The Hire Me and Start a Project links open the footer inquiry form, which posts to FormSubmit using the existing contact email. Book a Call opens the Cal.com profile. Inbox activation is pending. Verified required fields, keyboard navigation, and the outgoing form payload with an intercepted request in Chrome at desktop and phone widths.
 
-**Next:** Connect contact, social, résumé, privacy and article destinations when supplied.
+**Next:** Replace the existing public resume when a newer PDF is supplied.
 
-**Open differences:** the portfolio collage brightens and the wordmark becomes legible sooner than in the desktop recording. The reference gains an outer purple frame near 7.8s, which the portfolio clips. Mobile uses its own shard order and card layouts. The menu and contact destination are placeholders. Scroll timing is based on the recordings and has no verified 1 px / 1% comparison to the live site.
+**Open differences:** the portfolio collage brightens and the wordmark becomes legible sooner than in the desktop recording. The reference gains an outer purple frame near 7.8s, which the portfolio clips. Mobile uses its own shard order and card layouts. The live desktop loader stalled in automated Chrome with full motion enabled, so desktop layout was checked with reduced motion and motion was compared against the recordings.
 
 ## Findings
 
-- The lower page adds Miami, USA., three wide feature cards in content order, two client cards, three blog cards and the footer. Services and Miami share the video scrubber. Both city renditions contain 149 frames at 24 fps with first-frame posters. Clients and Blog share a swipeable carousel on narrow screens and show the full row on desktop.
+- The illustrated Services and Indore backdrops use layered art and camera moves. The Services camera moves toward Ashutosh and the gold coupe. The Indore camera pulls back from Ashutosh on the motorcycle to reveal Rajwada. Each composition has its own desktop and portrait camera settings.
 
-- The three scroll contact sheets under `.measure/` show the artwork shrinking before Meet the Developer fills the view, cards passing over the pinned scene, then Services repeating that structure with video. `src/scroll-scenes.js` drives the hero handoff and video seek with ScrollTrigger. Both prepared Services renditions contain 34 frames at 24 fps, with a first-frame poster for each layout. Ride Along uses the hosted sportbike clip.
+- Work Experience presents the Codeshor Technologies full-stack role and the CSTEP automation internship as two illustrated cards, with navigation at `#experience`.
+
+- The Blog cards link to Ashutosh's three posts and display their dates. The LLM card also displays “10 min read.”
+
+- The Meet the Developer banner is a static image with a title. It uses a wide illustration and a dedicated portrait illustration at viewport aspect ratios of 4:5 or narrower. Both show Ashutosh with an ASUS Zenbook, a gold coupe and Rajwada Palace. The source and export paths are in the asset inventory.
+
+- The desktop and mobile vehicle panels and their assembled posters show Ashutosh seated on the motorcycle and standing in front of the sports coupe.
+
+- The live phone site presents the projects in a swipeable row and keeps the feature copy on the art. The portfolio now shares native scroll snapping and pagination across its phone project, client and blog rows. Full-page captures and presentation timings are under `.measure/full-audit/`. With the bundled, independently decodable frames, scripted Miami scrubs recorded maximum frame gaps of 50 ms at 1440 × 900 and 33 ms at 390 × 844.
+
+- All 734 frames of `03-launch-trailer.mov` were decoded. The reference hero CTA fades out around 1.6s, the scene is mostly settled around 3.0s, the navbar CTA appears around 3.7s, and the featured card enters around 4.8s. These timestamps describe the recorded scroll. The portfolio uses separate scroll ranges for these beats, darkens its pinned artwork as the featured project showcase enters, and uses a right-weighted crop in phone portrait. Before-and-after Chrome captures and frame measurements are under `.measure/meet-review/`.
+
+- The three lower-page recordings contain 2,392 frames total (654 Services, 950 city, 788 features through footer). The incoming pinned scenes fade in behind the outgoing cards, then the video darkens as the next cards or bio scroll over it. The lower cards stay sharp while the surrounding field softens. Before-and-after Chrome captures, reference luminance and edge measurements, and scroll-state samples are under `.measure/lower-review/`.
+
+- `src/scroll-scenes.js` drives the hero handoff, backdrop lighting and video seek with ScrollTrigger. Both Services renditions contain 34 frames at 24 fps and both Indore renditions contain 149, with matching first-frame posters. Work Experience and Blog share a swipeable carousel on narrow screens and show the full row on desktop.
 
 - The settled hero in `src/references/01-hero-intro.mp4` is visible around 7–9 seconds. The static portfolio uses its inset-poster composition and places desktop details below the artwork with the CTA centered. The navigation controls sit near the viewport edges.
 
@@ -140,7 +154,9 @@ This file is the only context that carries between prompts and sessions. Keep it
 
 - The user's 1918 × 946 recording jumps directly from loader to poster. Chrome reproduces that path with `prefers-reduced-motion: reduce`; the sequence plays at the same viewport with `no-preference`. The local Windows client animation setting was off when checked via `SPI_GETCLIENTAREAANIMATION`.
 
-- The purple frame was baked into the supplied poster AVIFs. CSS clips the outer inset for each layout and keeps the artwork and logo aligned. The supplied VI layer includes the dark wordmark silhouette, so the intro draws the stand-alone gradient VI in CSS and wipes in the decoded combined logo. The timeline pauses while the tab is hidden.
+- CSS clips the frame baked into the poster AVIFs. The home brand uses the AL mark from `public/favicon.svg` and the text “Ashutosh Singh” in a single layer shared by the intro and static hero. The timeline pauses while the tab is hidden.
 
-- The [asset inventory](src/assets/README.md) maps the AVIFs to their originals and intended page slots. The static hero pairs each `poster.avif` with the same folder's `poster-logo.avif`. The desktop canvases are 2560 × 1440. The mobile canvases are 640 × 640 and 1366 × 1366 respectively and share the same aspect ratio. Desktop and mobile shards use different artwork numbering. Each layout's PNG masks match its AVIF shard numbers.
+- Keep the Meet backdrop hidden while the intro runs. Its scroll state is initialized after the intro completes, and the backdrop otherwise shows through the collage as the loader fades.
+
+- The [asset inventory](src/assets/README.md) maps the AVIFs to their originals and intended page slots. `tools/build_hero_art.py` cuts the numbered layers from the personalized artwork with the existing PNG masks and composites those crops into the corresponding posters. It also exports the favicon monogram and name in the three AVIF logo slots per layout. The static hero uses the responsive `poster.avif` backgrounds with the shared AshuLabs brand layer.
 - `src/index.css` registers the bundled Outfit variable font for body text and Barlow Condensed 700/900 for display type.

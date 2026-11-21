@@ -1,52 +1,52 @@
 # Content
 
-Every word on the Grand Theft Developer page, section by section, in page order. Edit this file to make the portfolio yours. Where a card names its art, keep the copy matching what the picture shows. `AGENT.md` has the rules for voice and sample content.
+Every word on the AshuLabs portfolio, section by section, in page order. Where a card names its art, keep the copy matching what the picture shows. `AGENT.md` has the rules for voice and sample content.
 
-**Page:** title "Grand Theft Developer · Jarvis, Full-Stack Developer". Description: "Portfolio of Jarvis, a full-stack developer in Miami."
+**Page:** title "AshuLabs · Ashutosh Singh, Full-Stack Developer". Description: "Portfolio of Ashutosh Singh, a full-stack developer in Indore."
 
-**Navbar:** GTD monogram (links to the top), menu icon, pill "Hire Me".
+**Navbar:** AL monogram (link to the top), menu icon (opens links to Meet the Developer, Services, Indore, Work Experience and Blog), pill "Hire Me".
 
 **Hero**
-- Tagline (in the release date's place, two lines): "Full-stack developer" / "Booking spring 2027"
+- Loader and browser icon: AL monogram
+- Intro and hero artwork: AL monogram, followed by "Ashutosh Singh"
+- Tagline (in the release date's place, two lines): "Full-stack developer" / "Remote from January 2027"
 - Button: "Hire Me"
 - Tech tags (in the platform logos' place): "React", "Node.js", "PostgreSQL"
 
 **Meet the Developer**
-- Scene: eyebrow "Watch", title "Meet the Developer", play button
-- Featured card (above the project cards, in the live "An Extended Look" card's place, sportbike art): eyebrow "Watch"; title "Ride Along"; button "Play"
-- Ride Along player button: "Close"
-- Project cards, in the order of their art (eyebrow → title): "AI" → "AI Book Assistant"; "3D Web" → "3D Basketball Website"; "Mobile" → "React Native Language App" (longer titles take the live site's smaller headline size)
+- Scene: title "Meet the Developer" over a static illustration
+- Featured card (above the project cards, studio illustration): title "From Idea to Launch"; link "Explore Projects"
+- Project cards, in the order of their art (eyebrow → title): "GSAP + Blender" → ["Monster App"](https://monster.ashu.fun/); "Backend" → ["Book My Ticket"](https://bms.ashu.fun/); "Frontend" → ["Portfolio Website"](https://www.ashu.fun/)
 
 **Services**
 - Card 1 (the big card, neon-sign art): title "Code Rescue"; text "For existing teams: slow pages, flaky deploys or a codebase nobody wants to touch. I find the problems, fix them and leave it documented."; button "See What's Included"; expanded text "Performance review, deployment fixes, and documentation for your team."
-- Card 2 (the wide card, rooftop art): eyebrow "For new products"; title "Full-Stack / Builds"; text "Product, API and database, designed and shipped end to end, from the first sketch to production. Typically six to ten weeks."; button "Start a Project"
+- Card 2 (the wide card, rooftop art): eyebrow "For new products"; title "Full-Stack / Builds"; text "I build full-stack web products, mobile apps with React Native and Expo, and generative AI features. Typically six to ten weeks from first sketch to production."; button "Start a Project"
 
-**Miami, USA.**
-- Title: "Miami, USA."
-- Bio: "I'm Jarvis, a full-stack developer who has spent eight years building products for startups, agencies and teams that need to ship fast without breaking things. I work across the whole stack, from the interface people see to the API and database behind it, and I care about code the next developer will thank me for."
+**Indore, India**
+- Title: "Indore, India"
+- Bio: "I'm Ashutosh Singh, a full-stack developer and applied AI engineer. I also build mobile apps with React Native and Expo. I enjoy discussing system design and thinking through how APIs, data models, and backend services fit together."
 
-**Feature cards** (three shown in this build, in source order)
+**Feature cards** (in source order)
 | Eyebrow | Title | Text | Button |
 |---|---|---|---|
-| Status | Open to Work | Available for freelance and contract work from spring 2027, remote or on site in Miami. | Hire Me |
-| Community | After Hours | When the deploy's done, I'm out with Miami's dev crowd: meetups, talks and the occasional late-night hackathon. | View All |
-| Case Study | The Heist: Shipped in Six Weeks | How I rebuilt a booking platform's checkout and cut drop-offs by 31%. | Read the Case Study |
-| Personal | Off the Clock | Open-source contributor, weekend game jammer and the one who always brings the coffee to the meetup. | More About Me |
+| Status | Open to Work | I’m available for remote work only, starting January 2027. | Hire Me |
+| Community | After Hours | I enjoy tech meetups and system design conversations with developer communities in Indore and Bhopal. | |
+| Case Study | Tech Tambola | We built a digital Tambola game for our college club’s Techtonic event. Here’s how we handled retries and competing claims for the last prize. | [Read the Case Study](https://blog.ashu.fun/it-worked-until-it-didn-t) |
+| Personal | Off the Clock | Away from the keyboard, I like catching a movie in Indore. | More About Me |
 
-**Clients** (header "Clients", link "View All")
-- Card 1 (key-rack art): eyebrow "Sample Clients"; title "Startups, Agencies and Product Teams"; button "See All Clients"
-- Card 2 (postcard art): eyebrow "Sample Review"; title "“Incredibly fast, detail-oriented, and easy to work with.”"; button "Read the Review"
+**Work Experience** (header "Work Experience", button "View all")
+- **Codeshor Technologies** · Full Stack Engineer · Jun 2026 – Present · Full-time · Remote. I build features across the stack, test where they break, and fix what I find.
+- **CSTEP** (Center for Study of Science, Technology and Policy) · Intern · Jul 2026 – Oct 2026 · Remote. I wrote scripts to automate recurring tasks and reduce manual steps in day-to-day workflows.
 
-**Blog** (header "Blog", link "View all")
-- "700 AI Agents Escaped and Became Hackers" (November 3, 2026)
-- "Agentic Engineering in 2026" (October 21, 2026)
-- "Think System Design & Architecture" (October 8, 2026)
+**Blog** (header "Blog", button "View all")
+- [In Love With the Machine, Not the Race](https://blog.ashu.fun/in-love-with-the-machine-not-the-race) (November 13, 2026)
+- [Are Certificates Dead? 💀](https://blog.ashu.fun/are-certificates-dead) (October 11, 2026)
+- [Understanding Large Language Models (LLMs):](https://blog.ashu.fun/understanding-large-language-models-llms) (July 1, 2026 · 10 min read)
 
 **Footer**
-- Logo
-- Pill (in the newsletter pill's place): "Build Your Own" / "Want a portfolio like this? Here's how it was built, step by step."
-- Build Your Own steps: "Edit the portfolio copy in CONTENT.md." / "Replace the supplied artwork and hosted video URLs with your own." / "Build the Vite project and publish its dist folder."
-- Socials: GitHub, LinkedIn, X, YouTube
-- Links: Email, Résumé, Privacy
+- AL monogram (link to the top)
+- Contact panel with the heading “Have a project in mind?” and the text “Tell me what you’re building and where you could use a hand.” The FormSubmit inquiry form asks for Name, Email and Project details, with a “Send Inquiry” button and a [“Book a Call” link](https://cal.com/ashudotbuilds).
+- Socials: [GitHub](https://github.com/ashudotbuilds), [LinkedIn](https://www.linkedin.com/in/ashudotbuilds/), [X](https://x.com/Ashudotbuilds)
+- Links: [Email](mailto:singhashutosh4123@gmail.com), [Résumé](public/ashutosh-singh-resume.pdf)
 - Badge (in the rating badge's place): "Rated D for Developer" / "Clean Code, Mild Refactoring, Frequent Coffee."
-- "© 2026 Grand Theft Developer."
+- "© 2026 AshuLabs."

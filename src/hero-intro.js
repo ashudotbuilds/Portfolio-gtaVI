@@ -29,7 +29,7 @@ const mobileFlight = [
 ]
 
 export async function waitForHero(site, loader, includeIntro) {
-  const selector = includeIntro ? '.hero-artwork img' : '.hero-poster img'
+  const selector = includeIntro ? '.hero-artwork img' : '.hero-poster img, .hero-brand img'
   const images = [...site.querySelectorAll(selector), loader.querySelector('img')]
   const fonts = [
     '600 1rem Outfit',
@@ -56,8 +56,9 @@ export function playHeroIntro(site, loader, compact, onComplete) {
   const artwork = site.querySelector('.hero-artwork')
   const intro = artwork.querySelector('.hero-intro')
   const poster = artwork.querySelector('.hero-poster')
-  const wordmark = intro.querySelector('[data-layer="logo-reveal"]')
-  const vi = intro.querySelector('[data-layer="logo-vi"]')
+  const wordmark = artwork.querySelector('.hero-brand-name')
+  const mark = artwork.querySelector('.hero-brand-mark')
+  const shade = artwork.querySelector('.hero-brand-shade')
   const header = site.querySelector('.site-header')
   const cta = site.querySelector('.hero-details .hire-link')
   const details = site.querySelectorAll('.hero-details > :not(.hire-link)')
@@ -67,7 +68,7 @@ export function playHeroIntro(site, loader, compact, onComplete) {
     entrance,
     depth,
   }))
-  const projected = [...layers, { element: vi, depth: 4.5 }, { element: wordmark, depth: 4.9 }]
+  const projected = [...layers, { element: mark, depth: 4.5 }, { element: wordmark, depth: 4.9 }]
   const cameraEase = gsap.parseEase('power2.inOut')
   const depthEase = gsap.parseEase('power3.inOut')
   const clock = { time: 0 }
@@ -86,7 +87,7 @@ export function playHeroIntro(site, loader, compact, onComplete) {
   return gsap.context(() => {
     gsap.set(projected.map(({ element }) => element), { opacity: 0, transformOrigin: origin })
     gsap.set(intro, { visibility: 'visible' })
-    gsap.set([poster, header, cta, ...details], { opacity: 0 })
+    gsap.set([poster, shade, header, cta, ...details], { opacity: 0 })
     gsap.set(wordmark, { '--wordmark-reveal': '0%' })
     gsap.set(layers[0].element, { opacity: 0.12 })
     project()
@@ -111,14 +112,14 @@ export function playHeroIntro(site, loader, compact, onComplete) {
       timeline.to(element, { opacity: 1, duration: 0.42, ease: 'sine.inOut' }, entrance)
     }
 
-    timeline.to(vi, { opacity: 1, duration: 0.5 }, 0.19)
-    timeline.to(vi, { '--vi-glow': 0.6, duration: 0.35, ease: 'sine.inOut' }, 0.48)
-    timeline.to(vi, { '--vi-glow': 0, duration: 0.55, ease: 'power2.in' }, 1.06)
+    timeline.to(mark, { opacity: 1, duration: 0.5 }, 0.19)
+    timeline.to(shade, { opacity: 1, duration: 0.52, ease: 'sine.inOut' }, 0.46)
+    timeline.to(mark, { opacity: 0.8, duration: 0.45, ease: 'sine.inOut' }, 1.04)
     timeline.set(wordmark, { opacity: 1 }, 0.96)
     timeline.to(wordmark, { '--wordmark-reveal': '114%', duration: 0.55, ease: 'power1.out' }, 0.96)
-    timeline.to(vi, { opacity: 0, duration: 0.37, ease: 'sine.inOut' }, 1.04)
     timeline.to(poster, { opacity: 1, duration: 0.22, ease: 'sine.inOut' }, 1.62)
     timeline.to(intro, { opacity: 0, duration: 0.16, ease: 'sine.inOut' }, 1.68)
+    timeline.set([mark, wordmark], { clearProps: 'transform,transformOrigin' }, 1.84)
     timeline.to(cta, { opacity: 1, duration: 0.50, ease: 'power1.in' }, 1.42)
     timeline.to([header, ...details], { opacity: 1, duration: 0.67, ease: 'power1.inOut' }, 1.42)
     return () => document.removeEventListener('visibilitychange', syncVisibility)

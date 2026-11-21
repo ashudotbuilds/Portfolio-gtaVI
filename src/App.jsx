@@ -1,12 +1,10 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import desktopPoster from './assets/site/hero/desktop/poster.avif'
-import desktopLogo from './assets/site/hero/desktop/poster-logo.avif'
 import mobilePoster from './assets/site/hero/mobile/poster.avif'
-import mobileLogo from './assets/site/hero/mobile/poster-logo.avif'
-import { hero, LINKS, navbar } from './content'
+import { blog, brandMark, experience, hero, LINKS, meet, miami, navbar, services } from './content'
 import { playHeroIntro, waitForHero } from './hero-intro'
 import { MeetDeveloper, Services } from './sections'
-import { Miami, Highlights, Clients, Blog, Footer } from './portfolio-sections'
+import { Miami, Highlights, WorkExperience, Blog, Footer } from './portfolio-sections'
 import { setupScrollScenes } from './scroll-scenes'
 
 const compactArtwork = '(max-width: 767px) and (orientation: portrait)'
@@ -18,15 +16,6 @@ const introArtwork = import.meta.glob('./assets/site/hero/*/shard-*.avif', {
 })
 const shards = Array.from({ length: 10 }, (_, i) => `shard-${String(i + 1).padStart(2, '0')}`)
 
-function PosterLogo({ alt, layer }) {
-  return (
-    <picture data-layer={layer}>
-      <source media={compactArtwork} srcSet={mobileLogo} width="1366" height="1366" />
-      <img src={desktopLogo} width="2560" height="1440" alt={alt} />
-    </picture>
-  )
-}
-
 function IntroArtwork() {
   return (
     <div className="hero-intro" aria-hidden="true">
@@ -36,28 +25,51 @@ function IntroArtwork() {
           <img src={introArtwork[`./assets/site/hero/desktop/${layer}.avif`]} alt="" />
         </picture>
       ))}
-      <div className="intro-vi" data-layer="logo-vi">
-        <div className="intro-vi-shape" />
-      </div>
-      <PosterLogo alt="" layer="logo-reveal" />
     </div>
   )
 }
 
 function Navbar() {
+  const menu = useRef(null)
+  const [open, setOpen] = useState(false)
+  const destinations = [
+    [LINKS.projects, meet.title],
+    [LINKS.services, services.title],
+    [LINKS.about, miami.title],
+    [LINKS.experience, experience.title],
+    [LINKS.blog, blog.title],
+  ]
+
+  function showMenu() {
+    menu.current.showModal()
+    setOpen(true)
+  }
+
   return (
     <header className="site-header">
       <nav className="site-shell navbar" aria-label="Main navigation">
-        <a className="navbar-mark" href={LINKS.home} aria-label={hero.title}>
-          {navbar.monogram}
+        <a className="navbar-mark" href={LINKS.home} aria-label="AL home">
+          <img src={brandMark} width="115" height="84" alt="" />
         </a>
         <a className="hire-link nav-hire" href={LINKS.hire}>{hero.hire}</a>
-        <button className="menu-button" type="button" aria-label={navbar.menu} disabled>
+        <button className="menu-button" type="button" aria-label={navbar.menu}
+          aria-haspopup="dialog" aria-controls="site-menu" aria-expanded={open} onClick={showMenu}>
           <span aria-hidden="true" />
           <span aria-hidden="true" />
           <span aria-hidden="true" />
         </button>
       </nav>
+      <dialog id="site-menu" className="site-menu" ref={menu} aria-label={navbar.menu}
+        onClose={() => setOpen(false)}>
+        <form method="dialog">
+          <button type="submit" className="section-action">{navbar.close}</button>
+        </form>
+        <ul>
+          {destinations.map(([href, label]) => (
+            <li key={href}><a href={href} onClick={() => menu.current.close()}>{label}</a></li>
+          ))}
+        </ul>
+      </dialog>
     </header>
   )
 }
@@ -72,9 +84,13 @@ function Hero({ showIntro }) {
             <source media={compactArtwork} srcSet={mobilePoster} width="640" height="640" />
             <img src={desktopPoster} width="2560" height="1440" alt="" fetchPriority="high" />
           </picture>
-          <h1 id="hero-title" className="hero-logo">
-            <PosterLogo alt={hero.title} />
-          </h1>
+        </div>
+        <div className="hero-brand">
+          <div className="hero-brand-shade" aria-hidden="true" />
+          <div className="hero-brand-mark" aria-hidden="true">
+            <img src={brandMark} width="115" height="84" alt="" />
+          </div>
+          <h1 id="hero-title" className="hero-brand-name"><span>{hero.title}</span></h1>
         </div>
       </div>
 
@@ -147,6 +163,7 @@ export default function App() {
 
   return (
     <div id="top" ref={page} className="site-content" data-ready={ready} inert={!ready}>
+      <div className="portfolio-glow" aria-hidden="true" />
       <Navbar />
       <main>
         <div className="hero-scroll">
@@ -156,7 +173,7 @@ export default function App() {
         <Services />
         <Miami />
         <Highlights />
-        <Clients />
+        <WorkExperience />
         <Blog />
       </main>
       <Footer />
