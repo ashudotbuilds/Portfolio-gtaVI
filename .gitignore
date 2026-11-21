@@ -20,7 +20,10 @@ dist-ssr
 # Reference recordings and measurement output
 /.measure/
 /src/references/
-/public/Recording 2026-11-21 012756.mp4
+/public/Recording *.mp4
+
+# Personal photo originals
+/src/assets/real_img/
 
 # Editor directories and files
 .vscode/*
