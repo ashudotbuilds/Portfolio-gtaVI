@@ -59,7 +59,7 @@ function Navbar() {
           <span aria-hidden="true" />
         </button>
       </nav>
-      <dialog id="site-menu" className="site-menu" ref={menu} aria-label={navbar.menu}
+      <dialog id="site-menu" className="site-menu" ref={menu} aria-label={navbar.menu} data-lenis-prevent
         onClose={() => setOpen(false)}>
         <form method="dialog">
           <button type="submit" className="section-action">{navbar.close}</button>

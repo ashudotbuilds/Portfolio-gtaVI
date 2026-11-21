@@ -203,7 +203,7 @@ function FooterContact() {
         </label>
         <label className="contact-message">
           {copy.message}
-          <textarea name="message" rows={4} readOnly={sending} required />
+          <textarea name="message" rows={4} readOnly={sending} required data-lenis-prevent />
         </label>
         <div className="contact-actions">
           <button type="submit" className="section-action" disabled={sending}>

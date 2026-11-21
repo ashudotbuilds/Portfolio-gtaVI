@@ -4,14 +4,18 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#16171d" />
+    <meta name="theme-color" content="#131424" />
     <meta
       name="description"
       content="Portfolio of Ashutosh Singh, a full-stack developer in Indore."
     />
     <title>AshuLabs · Ashutosh Singh, Full-Stack Developer</title>
     <style>
-      html { background: #16171d; }
+      html {
+        --surface: #131424;
+        --intro-background: radial-gradient(ellipse 66% 100% at 36% 68%, #171829, #131424 50%, #0f101d 100%);
+        background: var(--surface);
+      }
       body { margin: 0; }
       #site-loader {
         position: fixed;
@@ -19,7 +23,7 @@
         inset: 0;
         display: grid;
         place-items: center;
-        background: radial-gradient(ellipse at 50% 25%, #292437, #16171d 75%);
+        background: var(--intro-background);
       }
       #site-loader[hidden] { display: none; }
       #site-loader img {

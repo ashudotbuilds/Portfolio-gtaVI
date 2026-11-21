@@ -122,11 +122,17 @@ This file is the only context that carries between prompts and sessions. Keep it
 
 **Contact:** Hire Me and Start a Project lead to the footer. The form submits to FormSubmit's AJAX endpoint and displays its result in place. Book a Call embeds the Cal.com profile and its event calendars in the footer.
 
+**Hero:** The navbar AL mark renders at 1.95rem wide.
+
 **Next:** Replace the existing public resume when a newer PDF is supplied.
 
-**Open differences:** the portfolio collage brightens and the wordmark becomes legible sooner than in the desktop recording. The reference gains an outer purple frame near 7.8s, which the portfolio clips. Mobile uses its own shard order and card layouts. The live desktop loader stalled in automated Chrome with full motion enabled, so desktop layout was checked with reduced motion and motion was compared against the recordings.
+**Motion and color:** The hero now reveals the collage and wordmark over 2.41 seconds after decoding. Desktop wheel input uses Lenis with the reference's 0.07 interpolation and 1.2 wheel multiplier. CSS keeps native fragment navigation and the phone keeps native touch scrolling. The shell, loader, and overlays use the dark navy sampled from the user's screenshot (`#131424`, with a `#171829` center and `#0f101d` edge). The artwork files are unchanged.
+
+**Open differences:** The reference gains an outer purple frame near 7.8s, which the portfolio clips. Mobile uses its own shard order and card layouts. The live desktop loader stalled in automated Chrome with full motion enabled. The motion pass uses the six saved recordings, with aligned desktop hero captures and scroll-scene checks at seven viewport sizes.
 
 ## Findings
+
+- The motion pass decoded 4,212 reference frames. Aligned hero captures, per-frame recording metrics, and local scroll traces are in `.measure/motion-pass/`. The screenshot comparison measured a mean RGB error of 0.61 out of 255 in a clear background region.
 
 - The illustrated Services and Indore backdrops use layered art and camera moves. The Services camera moves toward Ashutosh and the gold coupe. The Indore camera pulls back from Ashutosh on the motorcycle to reveal Rajwada. Each composition has its own desktop and portrait camera settings.
 

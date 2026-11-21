@@ -86,7 +86,7 @@ export function playHeroIntro(site, loader, compact, onComplete) {
 
   return gsap.context(() => {
     gsap.set(projected.map(({ element }) => element), { opacity: 0, transformOrigin: origin })
-    gsap.set(intro, { visibility: 'visible' })
+    gsap.set(intro, { visibility: 'visible', opacity: 0 })
     gsap.set([poster, shade, header, cta, ...details], { opacity: 0 })
     gsap.set(wordmark, { '--wordmark-reveal': '0%' })
     gsap.set(layers[0].element, { opacity: 0.12 })
@@ -105,23 +105,26 @@ export function playHeroIntro(site, loader, compact, onComplete) {
     }
     document.addEventListener('visibilitychange', syncVisibility)
 
-    timeline.to(clock, { time: 1.84, duration: 1.84, onUpdate: project }, 0)
-    timeline.to(loader, { autoAlpha: 0, duration: 0.38, ease: 'sine.inOut' }, 0)
+    timeline.to(clock, { time: 2.15, duration: 2.15, onUpdate: project }, 0)
+    timeline.to(loader, { autoAlpha: 0, duration: 0.55, ease: 'sine.inOut' }, 0)
+    // The reference exposes the shards in shadow, then lifts the whole collage
+    // as the camera settles. Keep this exposure change on the intro layers.
+    timeline.to(intro, { opacity: 0.38, duration: 0.75, ease: 'sine.out' }, 0)
+    timeline.to(intro, { opacity: 1, duration: 1.4, ease: 'sine.inOut' }, 0.75)
 
     for (const { element, entrance } of layers) {
-      timeline.to(element, { opacity: 1, duration: 0.42, ease: 'sine.inOut' }, entrance)
+      timeline.to(element, { opacity: 1, duration: 0.56, ease: 'sine.inOut' }, entrance)
     }
 
-    timeline.to(mark, { opacity: 1, duration: 0.5 }, 0.19)
-    timeline.to(shade, { opacity: 1, duration: 0.52, ease: 'sine.inOut' }, 0.46)
-    timeline.to(mark, { opacity: 0.8, duration: 0.45, ease: 'sine.inOut' }, 1.04)
-    timeline.set(wordmark, { opacity: 1 }, 0.96)
-    timeline.to(wordmark, { '--wordmark-reveal': '114%', duration: 0.55, ease: 'power1.out' }, 0.96)
-    timeline.to(poster, { opacity: 1, duration: 0.22, ease: 'sine.inOut' }, 1.62)
-    timeline.to(intro, { opacity: 0, duration: 0.16, ease: 'sine.inOut' }, 1.68)
-    timeline.set([mark, wordmark], { clearProps: 'transform,transformOrigin' }, 1.84)
-    timeline.to(cta, { opacity: 1, duration: 0.50, ease: 'power1.in' }, 1.42)
-    timeline.to([header, ...details], { opacity: 1, duration: 0.67, ease: 'power1.inOut' }, 1.42)
+    timeline.to(mark, { opacity: 0.8, duration: 0.67, ease: 'sine.inOut' }, 0.19)
+    timeline.to(shade, { opacity: 1, duration: 0.72, ease: 'sine.inOut' }, 0.46)
+    timeline.to(wordmark, { opacity: 1, duration: 0.36, ease: 'sine.inOut' }, 1.05)
+    timeline.to(wordmark, { '--wordmark-reveal': '114%', duration: 0.76, ease: 'sine.inOut' }, 1.05)
+    timeline.to(cta, { opacity: 1, duration: 0.76, ease: 'sine.inOut' }, 1.42)
+    timeline.to([header, ...details], { opacity: 1, duration: 0.78, ease: 'sine.inOut' }, 1.56)
+    timeline.set([mark, wordmark], { clearProps: 'transform,transformOrigin' }, 2.15)
+    timeline.to(poster, { opacity: 1, duration: 0.17, ease: 'sine.inOut' }, 2.15)
+    timeline.to(intro, { opacity: 0, duration: 0.16, ease: 'sine.inOut' }, 2.25)
     return () => document.removeEventListener('visibilitychange', syncVisibility)
   }, site)
 }

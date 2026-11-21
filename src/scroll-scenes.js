@@ -1,5 +1,7 @@
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Lenis from 'lenis'
+import 'lenis/dist/lenis.css'
 import desktopPoster from './assets/site/services/backdrop-desktop.avif'
 import portraitPoster from './assets/site/services/backdrop-portrait.avif'
 import servicesDesktopVideo from './assets/site/services/motion-desktop.mp4'
@@ -18,6 +20,32 @@ const videoFps = 24
 
 function reveal(progress, start, end) {
   return revealEase(clamp((progress - start) / (end - start)))
+}
+
+function setupSmoothScroll(page) {
+  // Match the reference's desktop wheel response and keep native touch inertia.
+  const lenis = new Lenis({
+    lerp: 0.07,
+    wheelMultiplier: 1.2,
+    autoToggle: true,
+    virtualScroll: ({ event, deltaX, deltaY }) =>
+      event.type !== 'wheel' || (!event.shiftKey && Math.abs(deltaY) > Math.abs(deltaX)),
+  })
+  const tick = (time) => lenis.raf(time * 1000)
+  function releaseWheelForAnchor(event) {
+    // Let the browser's fragment scroll take over from any wheel inertia.
+    if (lenis.isSmooth && event.target instanceof Element && event.target.closest('a[href^="#"]')) {
+      lenis.scrollTo(window.scrollY, { immediate: true })
+    }
+  }
+  lenis.on('scroll', ScrollTrigger.update)
+  gsap.ticker.add(tick)
+  page.addEventListener('click', releaseWheelForAnchor)
+  return () => {
+    page.removeEventListener('click', releaseWheelForAnchor)
+    gsap.ticker.remove(tick)
+    lenis.destroy()
+  }
 }
 
 function setupBackdrop(section, { source, poster, reduced, foreground, scrubStart, scrubEnd }) {
@@ -168,6 +196,8 @@ export function setupScrollScenes(page, reducedMotionQuery) {
   const services = page.querySelector('.services')
   const city = page.querySelector('.miami')
 
+  media.add('(prefers-reduced-motion: no-preference)', () => setupSmoothScroll(page), page)
+
   media.add('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)',
     () => setupPointerGlow(page), page)
 
@@ -192,7 +222,6 @@ export function setupScrollScenes(page, reducedMotionQuery) {
       scrubStart: 'top 10%',
       scrubEnd: () => 'top top-=' + innerHeight * (portrait ? 0.66 : 0.71),
     })
-    const setArtwork = gsap.quickSetter(artwork, 'css')
     const setDetails = gsap.quickSetter(details, 'css')
     const setHeroOpacity = gsap.quickSetter(hero, 'opacity')
     const setNavHire = gsap.quickSetter(navHire, 'css')
@@ -209,7 +238,8 @@ export function setupScrollScenes(page, reducedMotionQuery) {
       const meetReveal = reveal(progress, 0.48, 0.84)
       const navReveal = reveal(progress, 0.83, 1)
       setHeroOpacity(1 - heroFade)
-      setArtwork({ scale: mix(1, 0.89, reveal(progress, 0, 0.64)) })
+      const shrink = reveal(progress, 0, 0.64)
+      artwork.style.scale = shrink ? mix(1, 0.89, shrink) : ''
       setDetails({ autoAlpha: 1 - detailsFade })
       setMeetScene({ '--meet-in': meetReveal })
       setNavHire({ opacity: navReveal, y: mix(8, 0, navReveal) })
@@ -242,7 +272,7 @@ export function setupScrollScenes(page, reducedMotionQuery) {
       return () => {
         cleanServices()
         cleanCity()
-        gsap.set(artwork, { clearProps: 'transform' })
+        artwork.style.removeProperty('scale')
         gsap.set(navHire, { clearProps: 'transform,opacity' })
         gsap.set(details, { clearProps: 'opacity,visibility' })
         meetScene.style.removeProperty('--meet-in')
