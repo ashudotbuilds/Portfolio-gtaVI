@@ -20,7 +20,7 @@ The city scene pulls back from a motorcycle on wet streets to reveal Rajwada Pal
 
 Portrait artwork reframes the opening shot, and project cards can be swiped on smaller screens.
 
-<img src="docs/screenshots/hero-mobile.jpg" alt="Mobile homepage with portrait collage, availability, and Hire Me button" width="320">
+<img src="docs/screenshots/hero-mobile.jpg" alt="Mobile homepage with portrait collage and Hire Me button" width="320">
 
 ## Run Locally
 

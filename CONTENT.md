@@ -9,7 +9,7 @@ Every word on the AshuLabs portfolio, section by section, in page order. Where a
 **Hero**
 - Loader and browser icon: AL monogram
 - Intro and hero artwork: AL monogram, followed by "Ashutosh Singh"
-- Tagline (in the release date's place, two lines): "Full-stack developer" / "Remote from January 2027"
+- Tagline: "Software Engineer"
 - Button: "Hire Me"
 - Tech tags (in the platform logos' place): "React", "Node.js", "PostgreSQL"
 

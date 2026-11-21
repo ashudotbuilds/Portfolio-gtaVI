@@ -95,10 +95,7 @@ function Hero({ showIntro }) {
       </div>
 
       <div className="hero-details">
-        <div>
-          <p className="hero-tagline">{hero.tagline}</p>
-          <p className="hero-availability">{hero.availability}</p>
-        </div>
+        <p className="hero-tagline">{hero.tagline}</p>
         <a className="hire-link" href={LINKS.hire}>
           {hero.hire}
         </a>

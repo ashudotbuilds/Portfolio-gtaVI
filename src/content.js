@@ -34,8 +34,7 @@ export const navbar = {
 
 export const hero = {
   title: 'Ashutosh Singh',
-  tagline: 'Full-stack developer',
-  availability: 'Remote from January 2027',
+  tagline: 'Software Engineer',
   hire: 'Hire Me',
   stackLabel: 'Tech stack',
   stack: ['React', 'Node.js', 'PostgreSQL'],

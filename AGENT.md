@@ -122,7 +122,7 @@ This file is the only context that carries between prompts and sessions. Keep it
 
 **Contact:** Hire Me and Start a Project lead to the footer. The form submits to FormSubmit's AJAX endpoint and displays its result in place. Book a Call embeds the Cal.com profile and its event calendars in the footer.
 
-**Hero:** The navbar AL mark renders at 1.95rem wide.
+**Hero:** The homepage tagline reads “Software Engineer.” The navbar AL mark renders at 1.95rem wide.
 
 **Next:** Replace the existing public resume when a newer PDF is supplied.
 
